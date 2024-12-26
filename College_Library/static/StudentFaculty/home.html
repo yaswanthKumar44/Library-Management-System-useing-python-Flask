@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Library | Faculty Dashboard | Student Dashboard</title>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-o5U3jJjTL6BrG1ttlp3h7SnjTpGp1DhxP4IoI1j7DgN24C/TP0VB+QgG2h5+9upj" crossorigin="anonymous">
+    <style>
+        /* Body and Background Styling */
+        body, html {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #000;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle at top right, #00274d, #061a40, #1b3a5e);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Particle Background Effect */
+        #particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: radial-gradient(circle, rgba(0,36,61,1) 0%, rgba(9,9,121,0.7) 100%);
+            animation: moveBackground 30s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
+        }
+
+        /* Header Styling with Glowing Effect */
+        header {
+            background: linear-gradient(45deg, #001f3f, #004080);
+            padding: 20px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            color: #fff;
+            text-shadow: 0 0 8px #00e6e6, 0 0 12px #00e6e6;
+            animation: glow 2s infinite alternate;
+        }
+
+        /* Glowing Animation for Header */
+        @keyframes glow {
+            from { text-shadow: 0 0 8px #00e6e6, 0 0 12px #00e6e6; }
+            to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff; }
+        }
+
+        /* Navigation Containers */
+        .nav-containers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 30px 0;
+            gap: 20px;
+            width: 80%;
+        }
+
+        /* Individual Container Styles */
+        .nav-containers .container {
+            background: linear-gradient(145deg, #003d66, #006080);
+            color: #fff;
+            padding: 20px;
+            font-size: 18px;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 220px;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            animation: fadeIn 1.5s ease forwards;
+            opacity: 0;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Hover Effects for Containers */
+        .nav-containers .container:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Icons and Logout Styling */
+        .nav-containers .container i {
+            font-size: 24px;
+            color: #00e6e6;
+        }
+
+        .logout-container {
+            background: linear-gradient(145deg, #b30000, #ff4d4d);
+        }
+
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(45deg, #001a33, #003d66);
+            color: #ddd;
+            font-size: 14px;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles"></div>
+
+    <!-- Header -->
+    <header>
+        College Library | Faculty Dashboard | Student Dashboard
+    </header>
+
+    <!-- Navigation Containers -->
+    <div class="nav-containers">
+        <div class="container" onclick="location.href='/home'"><i class="fas fa-tachometer-alt"></i>Dashboard</div>
+        <div class="container" onclick="location.href='/user-profile'"><i class="fas fa-user-astronaut"></i>Profile</div>
+        <div class="container" onclick="location.href='/user-library-visits'"><i class="fas fa-meteor"></i>Library Visits</div>
+        <div class="container" onclick="location.href='/user-view-books'"><i class="fas fa-book-open"></i>Books of the Library</div>
+        <div class="container" onclick="location.href='/books-taken'"><i class="fas fa-folder-open"></i>Books Borrowed</div>
+        <div class="container logout-container" onclick="location.href='/logout'"><i class="fas fa-door-open"></i>Logout</div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 College Library | Faculty Department | Student Dashboard</p>
+    </footer>
+</body>
+</html>

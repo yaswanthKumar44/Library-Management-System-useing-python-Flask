@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Visits</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your styles -->
+    <style>
+        /* Basic Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #00274d, #061a40);
+            background-image: url('https://img2.cgtrader.com/items/2669485/6564b7b21d/library-books-shelves-3d-model-low-poly-max-fbx-c4d-ma-blend.jpg');
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Heading Styling with Animation */
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease-in-out;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Table Styling */
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: slideInUp 0.8s ease-in-out;
+        }
+
+        /* Header Styling */
+        thead {
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        /* Row Hover Transition */
+        tbody tr {
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f8ff;
+            transform: scale(1.02);
+        }
+
+        /* Buttons Styling with Hover Effect */
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Slide-in Animations */
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            button {
+                width: 90%;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Heading -->
+    <h1>Your Library Visits</h1>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <button onclick="location.href='/home'">Back to Home</button>
+        <button onclick="location.href='/logout'">Logout</button>
+    </div>
+
+    <!-- Table for Library Visit Records -->
+    <table>
+        <thead>
+            <tr>
+                <th>Visit Date</th>
+                <th>Entry Time</th>
+                <th>Exit Time</th>
+                <th>Time Spent</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for visit in visits %}
+                <tr>
+                    <td>{{ visit.visit_date }}</td>
+                    <td>{{ visit.entry_time }}</td>
+                    <td>{{ visit.exit_time }}</td>
+                    <td>{{ visit.time_spent }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

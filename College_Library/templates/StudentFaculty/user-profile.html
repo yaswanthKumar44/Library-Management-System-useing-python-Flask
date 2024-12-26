@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+           
+            background-image: url('https://img2.cgtrader.com/items/2669485/6564b7b21d/library-books-shelves-3d-model-low-poly-max-fbx-c4d-ma-blend.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+           
+            animation: fadeIn 1s ease-in; /* Animation for page load */
+        }
+
+        header {
+            background: #1aff00;
+            color: white;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700; /* Change color on hover */
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgb(225, 182, 162);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(213, 16, 16, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            padding: 20px;
+        }
+
+        .profile-info p {
+            margin: 10px 0;
+        }
+
+        .profile-photo {
+            display: block;
+            margin: 20px auto;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover; /* Ensures the image fits well */
+            transition: transform 0.3s ease;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        .logout-button {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #ff4757;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: #e84118; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/home"><i class="fas fa-house"></i> Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>User Profile</h1>
+        <center>
+        <div class="profile-info">
+           
+            <img src="{{ profile_photo_path }}" alt="Profile Photo" style="width: 150px; height: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); object-fit: cover;">
+
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Type:</strong> {{ user.type }}</p>
+            <p><strong>Email:</strong> {{ user.gmail }}</p>
+            <p><strong>Mobile:</strong> {{ user.mobile }}</p>
+            <p><strong>Address:</strong> {{ user.address }}</p>
+            <p><strong>Branch:</strong> {{ user.branch }}</p>
+        </div>
+        <a href="/logout" class="logout-button">Logout</a>
+    </center>
+    </main>
+</body>
+</html>

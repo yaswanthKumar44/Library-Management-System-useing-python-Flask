@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issued Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://wallpapercave.com/wp/ijo8KeK.jpg') no-repeat center center fixed; /* Background image */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: rgb(33, 243, 10);
+        }
+        header {
+            background-color: #4ae152;
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ffdd57;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        .search-container input[type="text"]:focus {
+            border-color: #4a69e1;
+            outline: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(2, 70, 243, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #1222d8;
+            text-align: center;
+        }
+        th {
+            background-color: #4a69e1;
+            color: rgb(255, 255, 255);
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Change hover effect to color instead of scaling */
+        }
+        .status-container {
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* Hidden by default */
+        }
+        .status-container h3 {
+            margin: 0 0 10px 0;
+        }
+        .status-container button {
+            padding: 8px 15px;
+            background-color: #4a69e1;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .status-container button:hover {
+            background-color: #3b5bd1;
+        }
+        /* Popup Message Styles */
+        .popup-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: rgba(244, 14, 14, 0.9);
+            border: 2px solid #e90909;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+        }
+        .popup-message button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="/librarian-home"><i class="fas fa-house"></i> Dashboard</a></li>
+            <li><a href="/librarian-logout" id="logout-link">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<h2>Issued Books</h2>
+
+<!-- Pop-up Message Container -->
+<div id="popupMessage" class="popup-message">
+    <span id="popupText"></span>
+    <button onclick="closePopup()">Close</button>
+</div>
+
+<div class="status-container" id="statusContainer">
+    <h3>Update Book Status</h3>
+    <form id="updateStatusForm" action="/update-status" method="POST">
+        <input type="hidden" name="issuedId" id="issuedIdInput" value="">
+        <label for="status">Select Status:</label>
+        <select name="status" id="statusSelect">
+            <option value="Returned">Returned</option>
+            <option value="Damaged">Damaged</option>
+        </select>
+        <button type="submit">Update Status</button>
+        <button type="button" onclick="closeStatusContainer()">Cancel</button>
+    </form>
+</div>
+
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search issued books..." onkeyup="filterTable()">
+</div>
+
+<table id="issuedBooksTable">
+    <thead>
+        <tr>
+            <th>Issued ID</th>
+            <th>Username</th>
+            <th>Book ID</th>
+            <th>Issued Date</th>
+            <th>Return Limit Date</th>
+            <th>Return Date</th>
+            <th>Fine</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- The book data will be dynamically inserted here using Python (Flask/Django) -->
+        {% for book in issued_books %}
+            <tr>
+                <td>{{ book.issuedId }}</td>
+                <td>{{ book.username }}</td>
+                <td>{{ book.bookId }}</td>
+                <td>{{ book.issuedDate }}</td>
+                <td>{{ book.returnLimitDate or 'N/A' }}</td>
+                <td>{{ book.returnDate or 'Not Returned' }}</td>
+                <td>${{ book.fine }}</td>
+                <td>{{ book.status }}</td>
+                <td>
+                    <button onclick="openStatusContainer('{{ book.issuedId }}', '{{ book.status }}')">Update Status</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    document.getElementById('updateStatusForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const issuedId = document.getElementById('issuedIdInput').value;
+        const status = document.getElementById('statusSelect').value;
+
+        // Send an AJAX request to update the status
+        fetch('/update-status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ issuedId, status })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Get the JSON response
+            } else {
+                throw new Error('Failed to update status');
+            }
+        })
+        .then(data => {
+            // Display success message from backend
+            document.getElementById('popupText').innerText = data.message;
+            document.getElementById('popupMessage').style.display = 'block';
+            closeStatusContainer(); // Close the status update container
+        })
+        .catch(error => {
+            // Display error message from backend
+            document.getElementById('popupText').innerText = error.message;
+            document.getElementById('popupMessage').style.display = 'block';
+        });
+    });
+
+    function openStatusContainer(issuedId) {
+        document.getElementById('issuedIdInput').value = issuedId;
+        document.getElementById('statusContainer').style.display = 'block';
+    }
+
+    function closeStatusContainer() {
+        document.getElementById('statusContainer').style.display = 'none';
+    }
+
+    function closePopup() {
+        document.getElementById('popupMessage').style.display = 'none';
+    }
+
+    function filterTable() {
+        const filter = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#issuedBooksTable tbody tr');
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const rowText = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+            row.style.display = rowText.includes(filter) ? '' : 'none';
+        });
+    }
+</script>
+
+</body>
+</html>

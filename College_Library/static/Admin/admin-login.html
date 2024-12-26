@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Video Background */
+        
+        /* Main Page Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background: url('https://wallpapercave.com/wp/ijo8KeK.jpg') no-repeat center center fixed;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffffff;
+            animation: fadeDown 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Form Container */
+        .login-container {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: slideIn 0.8s ease-out forwards;
+            opacity: 0;
+            backdrop-filter: blur(8px);
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-size: 1.2em;
+            color: #ddd;
+            animation: fadeUp 1s ease forwards;
+            opacity: 0;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            outline: none;
+            font-size: 1em;
+            color: #333;
+            background: #fff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        }
+
+        /* Submit Button */
+        button {
+            margin-top: 25px;
+            padding: 12px 0;
+            width: 100%;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #0056b3, #003a70);
+            transform: scale(1.03);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form Container -->
+    <div class="login-container">
+        <h1>Login</h1>
+        
+        <form action="/admin-login" method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

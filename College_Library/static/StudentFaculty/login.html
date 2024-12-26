@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student/Faculty Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://img2.cgtrader.com/items/2669485/6564b7b21d/library-books-shelves-3d-model-low-poly-max-fbx-c4d-ma-blend.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            animation: fadeIn 1s ease-in;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+            animation: slideIn 0.5s ease-in;
+        }
+        h2 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            text-align: left;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+        button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #357ab8;
+            transform: scale(1.05);
+        }
+        .popup-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4c4c;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 10;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+            max-width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Student/Faculty Login</h2>
+        <form action="/user-login" method="POST" id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div class="popup-message" id="popupMessage"></div>
+
+    <script>
+        // Show pop-up message
+        function showPopup(message, success = false) {
+            const popup = document.getElementById('popupMessage');
+            popup.textContent = message;
+            popup.style.display = 'block';
+            popup.style.backgroundColor = success ? '#4caf50' : '#ff4c4c'; // Green for success, red for error
+            popup.style.opacity = '1'; // Make sure the opacity is reset
+    
+            // Use opacity fade-out for a smooth transition
+            setTimeout(() => {
+                popup.style.opacity = '0'; // Gradual fade-out
+                setTimeout(() => {
+                    popup.style.display = 'none'; // Hide after fade-out
+                }, 500); // Matches fade-out duration
+            }, 4000); // Display message for 4 seconds
+        }
+    
+        // Handle form submission
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent form from submitting normally
+    
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+    
+            try {
+                const response = await fetch('/user-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+    
+                const result = await response.json();
+    
+                if (response.ok) {
+                    showPopup(result.message, true); // Display success message
+                    setTimeout(() => {
+                        window.location.href = result.redirect_url; // Redirect after message display
+                    }, 2000); // Wait 2 seconds before redirecting
+                } else {
+                    showPopup(result.message); // Display error message
+                }
+            } catch (error) {
+                console.error("Error during login:", error);
+                showPopup("An error occurred during login.");
+            }
+        });
+    </script>
+    
+</body>
+</html>

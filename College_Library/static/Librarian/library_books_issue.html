@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://wallpapercave.com/wp/ijo8KeK.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        header {
+            background-color: rgba(74, 105, 225, 0.8);
+            padding: 15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        header nav ul li a:hover {
+            background-color: #3a55c3;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+
+        .form-group input[type="text"]:focus {
+            border: 1px solid #4a69e1;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4a69e1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #3a55c3;
+            transform: translateY(-2px);
+        }
+
+        .view-issued-books {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .view-issued-books i {
+            margin-right: 5px;
+        }
+
+        /* Style for the pop-up message */
+        .popup-message {
+    position: fixed;
+    top: 20px; /* Position the message 20px from the top */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    background-color: rgba(0, 128, 0, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 1000;
+}
+
+
+        .popup-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/librarian-home"><i class="fas fa-house"></i> Dashboard</a></li>
+                <li><a href="/librarian-logout" id="logout-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Issue Book/Return Book</h2>
+
+        <form id="issueBookForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="bookid">Book ID</label>
+                <input type="text" id="bookid" name="bookid" required>
+            </div>
+            <button type="submit">Issue Book/Return Book</button>
+        </form>
+
+        <div class="view-issued-books">
+            <a href="/view-issued-books">
+                <button>
+                    <i class="fas fa-book-open"></i> View Issued Books
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Pop-up message -->
+    <div class="popup-message" id="popupMessage"></div>
+
+    <script>
+        const form = document.getElementById('issueBookForm');
+const popupMessage = document.getElementById('popupMessage');
+
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    try {
+        const response = await fetch('/issue-book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        // Display the message in the popup
+        popupMessage.textContent = result.message;
+        popupMessage.classList.add('show');
+
+        // Clear the form fields
+        form.reset();
+
+        // Hide the popup after 3 seconds
+        setTimeout(() => {
+            popupMessage.classList.remove('show');
+        }, 10000);
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+    </script>
+
+</body>
+
+</html>

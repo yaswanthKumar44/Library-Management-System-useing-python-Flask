@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Librarians</title> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        nav {
+            background-color: #333;
+            padding: 10px 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #searchBar {
+            width: 300px;
+            padding: 10px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        td img.profile-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .btn-delete {
+            color: #e74c3c;
+        }
+
+        #librariansTable {
+            width: 100%;
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+
+            #searchBar {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/admin-home">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/home-page.png" alt="Dashboard Icon" width="30">
+            </a></li>
+            <li><a href="/admin-logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h2>View Librarians</h2>
+    <input type="text" id="searchBar" placeholder="Search for librarians..." onkeyup="filterLibrarians()">
+
+    <table id="librariansTable">
+        <thead>
+            <tr>
+                <th>Profile Photo</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Qualification</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for librarian in librarians %}
+                <tr>
+                    <!-- Assuming librarian.profile_photo contains just the filename -->
+                    <td>
+                        <img src="{{ url_for('uploaded_file', filename=librarian.profile_photo) }}" alt="Profile Photo" class="profile-photo">
+                    </td>
+                    <td>{{ librarian.name }}</td>
+                    <td>{{ librarian.username }}</td>
+                    <td>{{ librarian.email }}</td>
+                    <td>{{ librarian.mobile }}</td>
+                    <td>{{ librarian.qualification }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_librarian', username=librarian['username']) }}">Edit</a> 
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function filterLibrarians() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchBar");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("librariansTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                let found = false;
+
+                for (let j = 1; j < td.length - 1; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (found) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

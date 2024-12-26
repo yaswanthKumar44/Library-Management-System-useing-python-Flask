@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Member</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #c9d6ff, #e2e2e2);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+        }
+        
+        header:hover {
+            background: #0056b3;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #ffdf00;
+            transform: scale(1.1);
+        }
+
+        /* Form Container */
+        .edit-form-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            margin: 20px auto;
+            text-align: left;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .edit-form-container:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Form Header */
+        .edit-form-container h2 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .edit-form-container h2::after {
+            content: "";
+            width: 50px;
+            height: 3px;
+            background-color: #007BFF;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        .form-group input[type="file"] {
+            padding: 5px;
+        }
+
+        .form-group button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #218838;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .footer a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/librarian-home"><i class="fas fa-house"></i> Dashboard</a></li>
+                <li><a href="/librarian-logout" id="logout-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Edit Member</h1>
+
+    <div class="edit-form-container">
+        <h2>Edit Member Information</h2>
+        <form method="POST" action="/edit-member/{{ user.username }}" enctype="multipart/form-data">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" value="{{ user.name }}" required>
+            </div>
+        
+            <!-- Username (Cannot be changed) -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" disabled>
+            </div>
+        
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="gmail" value="{{ user.gmail }}" required>
+            </div>
+        
+            <!-- Mobile -->
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input type="text" id="mobile" name="mobile" value="{{ user.mobile }}" required>
+            </div>
+        
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" value="{{ user.address }}" required>
+            </div>
+        
+            <!-- Branch -->
+            <div class="form-group">
+                <label for="branch">Branch</label>
+                <select id="branch" name="branch" required>
+                    <option value="">Select</option>
+                    <option value="CSE" {% if user.branch == 'CSE' %}selected{% endif %}>CSE</option>
+                    <option value="CSE - AIML" {% if user.branch == 'CSE - AIML' %}selected{% endif %}>CSE - AIML</option>
+                    <option value="AIDS" {% if user.branch == 'AIDS' %}selected{% endif %}>AIDS</option>
+                    <option value="IT" {% if user.branch == 'IT' %}selected{% endif %}>IT</option>
+                    <option value="Mechanical" {% if user.branch == 'Mechanical' %}selected{% endif %}>Mechanical</option>
+                    <option value="ECE" {% if user.branch == 'ECE' %}selected{% endif %}>ECE</option>
+                    <option value="EEE" {% if user.branch == 'EEE' %}selected{% endif %}>EEE</option>
+                    <option value="Civil" {% if user.branch == 'Civil' %}selected{% endif %}>Civil</option>
+                    <option value="Aerospace" {% if user.branch == 'Aerospace' %}selected{% endif %}>Aerospace</option>
+                </select>
+                
+            </div>
+        
+            <!-- Profile Photo -->
+            <div class="form-group">
+                <label for="profile_photo">Profile Photo</label>
+                <input type="file" id="profile_photo" name="profile_photo">
+            </div>
+        
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+   
+</body>
+</html>

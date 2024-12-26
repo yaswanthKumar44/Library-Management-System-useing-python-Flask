@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Library Login</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #e4e7e9, #edf0f7);
+            background-image: url('https://th.bing.com/th/id/R.0aafb871c2a6d16a37093b69ead0b807?rik=a7L83HPoJaqwZQ&riu=http%3a%2f%2fafoledu.us%2fimages%2fdesk-with-books4.jpg&ehk=8uRjLK0Y0gnoIA%2f%2fyNtsxZ1TnWoxRzjDHkGNsRfb8CY%3d&risl=&pid=ImgRaw&r=0'); /* Replace with your image URL */
+            color: #a39c9c;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Container styling */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            animation: fadeIn 1.5s ease;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 2.5rem;
+            color: #00ffab;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Login Buttons styling */
+        .login-section {
+            position: fixed;
+            top: 20px;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+
+        .login-button {
+            background: #00ffab;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #222;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: #00d294;
+            transform: scale(1.05);
+        }
+
+        /* Info Section */
+        .info-section {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 6rem;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        .info-box {
+            flex: 1;
+            min-width: 280px;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 255, 171, 0.2);
+            transition: transform 0.3s ease;
+            animation: fadeInScale 1.2s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .info-box h2 {
+            color: #00ffab;
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .info-box p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .benefits h2 {
+            font-size: 2rem;
+            color: #00ffab;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .benefits ul {
+            list-style-type: none;
+        }
+
+        .benefits li {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            margin-bottom: 1rem;
+            border-left: 4px solid #00ffab;
+            border-radius: 5px;
+            transition: background 0.3s;
+            animation: fadeInLeft 1.3s ease;
+        }
+
+        .benefits li:hover {
+            background: rgba(0, 255, 171, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .info-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .login-section {
+                flex-direction: column;
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Buttons -->
+    <div class="login-section">
+        <div class="login-button" onclick="window.location.href='/admin-login'">Admin Login</div>
+        <div class="login-button" onclick="window.location.href='/librarian-login'">Librarian Login</div>
+        <div class="login-button" onclick="window.location.href='/login'">Login</div>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to the College Library</h1>
+    
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-box">
+                <h2>Explore Our Collection</h2>
+                <p>Discover a wide array of resources, including engineering books, journals, and digital archives. Our library is designed to support your learning journey with curated content in fields like computer science, electronics, mechanical and civil engineering, and more.</p>
+            </div>
+            <div class="info-box">
+                <h2>Digital Resources</h2>
+                <p>Our digital library offers online access to e-books, research journals, and databases, available 24/7. Stay up-to-date with the latest publications and research material, easily accessible from anywhere.</p>
+            </div>
+            <div class="info-box">
+                <h2>Study and Collaboration Spaces</h2>
+                <p>Find your ideal study environment in our library, which provides quiet study rooms and collaborative spaces equipped with high-speed internet. Join study groups or focus in silence—whatever suits your needs best.</p>
+            </div>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="benefits">
+            <h2>Library Benefits</h2>
+            <ul>
+                <li>Access a vast collection of engineering resources tailored for students and faculty.</li>
+                <li>Get assistance from knowledgeable library staff and academic support.</li>
+                <li>Benefit from digital resources, including e-books, journals, and research databases.</li>
+                <li>Enjoy high-speed internet, research tools, and quiet study spaces.</li>
+            </ul>
+        </div>
+    </div>
+ 
+</body>
+</html>

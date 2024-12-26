@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librarian Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://wallpapercave.com/wp/ijo8KeK.jpg') no-repeat center center fixed; /* Background image */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: rgb(33, 243, 10);
+        }
+
+        header {
+            background-color: #4a69e1;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #e0e0e0;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+            z-index: 1;
+            position: relative;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        p {
+            color: #ede6e6;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #4a69e1, #6a82fb);
+            color: white;
+            padding: 20px 40px; /* Increased padding for bigger buttons */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px; /* Larger font size */
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            min-width: 250px; /* Increased minimum width */
+            text-align: left;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        button a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #6a82fb, #4a69e1);
+            transform: translateY(-8px) scale(1.05); /* Slide and scale effect */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-icon {
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        button:hover .button-icon {
+            transform: translateX(-5px);
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Background Animation */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://source.unsplash.com/1600x900/?library,books') no-repeat center center/cover;
+            filter: blur(20px);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Button Hover Effect */
+        .action-buttons button {
+            transition: transform 0.3s;
+        }
+
+        .action-buttons button:hover {
+            transform: scale(1.05);
+        }
+
+
+        .action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Space between buttons */
+    justify-items: center; /* Center buttons in their grid cells */
+    margin-top: 30px; /* Margin for the grid */
+}
+
+.action-button {
+    background: linear-gradient(135deg, #4a69e1, #6a82fb);
+    color: white;
+    padding: 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for effects */
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.action-button a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    z-index: 2; /* Bring the text above other layers */
+}
+
+.action-button:hover {
+    transform: scale(1.05) translateY(-5px); /* Scale up on hover */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+}
+
+/* Light Effect Animation */
+.action-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+}
+
+.action-button:hover::before {
+    width: 400%;
+    height: 400%;
+    opacity: 1;
+}
+
+/* Icon Animation */
+.button-icon {
+    margin-right: 10px;
+    transition: transform 0.3s;
+}
+
+.action-button:hover .button-icon {
+    transform: translateX(-5px); /* Slide icon left on hover */
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/librarian-home"><i class="fas fa-house"></i> Dashboard</a></li>
+                <li><a href="/librarian-logout" id="logout-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h1>Welcome, Librarian!</h1>
+            <p>Manage your library with ease.</p>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-button">
+                    <a href="/add-student-faculty">
+                        <i class="fas fa-user-plus button-icon"></i> Add Student/Faculty
+                    </a>
+                </button>
+                <button class="action-button">
+                    <a href="/librarian-view-books">
+                        <i class="fas fa-book button-icon"></i> Books
+                    </a>
+                </button>
+                <button class="action-button">
+                    <a href="/view-users">
+                        <i class="fas fa-users button-icon"></i> Students/Faculty
+                    </a>
+                </button>
+                <button class="action-button">
+                    <a href="/librarian-profile">
+                        <i class="fas fa-user button-icon"></i> Profile
+                    </a>
+                </button>
+                <button class="action-button">
+                    <a href="/add-library-visit">
+                        <i class="fas fa-sign-in-alt button-icon"></i> Add Library Login
+                    </a>
+                </button>
+                <button class="action-button">
+                    <a href="/library-books-issue">
+                        <i class="fas fa-book-reader button-icon"></i> Books Outed
+                    </a>
+                </button>
+            </div>
+            
+        </section>
+    </main>
+    <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <footer>
+        <p>&copy; 2023 Library Management System</p>
+    </footer>
+</body>
+</html>

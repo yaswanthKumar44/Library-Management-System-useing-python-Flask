@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student/Faculty Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Animation Keyframes */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #c9d6ff, #e2e2e2);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite; /* Background Animation */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700; /* Gold color on hover */
+        }
+
+        .search-bar {
+            margin: 20px 0;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: #007BFF; /* Highlight border on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        .display-section {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto; /* Enable horizontal scrolling if necessary */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .no-details {
+            color: #ff0000; /* Red color for no details message */
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Button Hover Animation */
+        }
+
+        .edit-btn {
+            background-color: #28a745; /* Green color for edit */
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .delete-btn {
+            background-color: #dc3545; /* Red color for delete */
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            animation: fadeIn 0.3s; /* Modal Fade-In Effect */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+        }
+
+        .confirm-btn, .cancel-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.3s ease; /* Button Hover Animation */
+        }
+
+        .confirm-btn {
+            background-color: #dc3545; /* Red for confirm */
+            color: white;
+        }
+
+        .confirm-btn:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        .cancel-btn {
+            background-color: #28a745; /* Green for cancel */
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        .profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/librarian-home"><i class="fas fa-house"></i> Dashboard</a></li>
+                <li><a href="/librarian-logout" id="logout-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Student/Faculty Details</h1>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search members..." onkeyup="filterMembers()">
+    </div>
+    <div class="display-section" id="membersContainer">
+        {% if users and users|length > 0 %}
+            <h2>All Members</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Profile Photo</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Type</th>
+                        <th>Gmail</th>
+                        <th>Mobile Number</th>
+                        <th>Address</th>
+                        <th>Password</th>
+                        <th>Branch</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr class="member" data-name="{{ user.name }}" data-username="{{ user.username }}" data-type="{{ user.type }}" data-gmail="{{ user.gmail }}" data-mobile="{{ user.mobile }}" data-address="{{ user.address }}" data-branch="{{ user.branch }}">
+                            <td>
+                                <img src="{{ url_for('uploaded_file', filename=user.profile_photo) }}" alt="Profile Photo" class="profile-photo">
+                            </td>
+                            
+                            <td>{{ user.name if user.name else 'N/A' }}</td>
+                            <td>{{ user.username if user.username else 'N/A' }}</td>
+                            <td>{{ user.type if user.type else 'N/A' }}</td>
+                            <td>{{ user.gmail if user.gmail else 'N/A' }}</td>
+                            <td>{{ user.mobile if user.mobile else 'N/A' }}</td>
+                            <td>{{ user.address if user.address else 'N/A' }}</td>
+                            <td>{{ user.password if user.password else 'N/A' }}</td>
+                            <td>{{ user.branch if user.branch else 'N/A' }}</td>
+                            <td class="buttons">
+                                <button class="edit-btn" onclick="location.href='/edit-member/{{ user.username }}'">Edit</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-details">No member details available.</p>
+        {% endif %}
+    </div>
+    
+
+    <!-- Modal for Delete Confirmation -->
+   
+    <script>
+      let selectedUsername = '';
+
+
+      // Search Functionality
+      function filterMembers() {
+          const searchInput = document.getElementById('searchInput').value.toLowerCase();
+          const members = document.querySelectorAll('.member');
+
+          members.forEach(member => {
+              const name = member.getAttribute('data-name').toLowerCase();
+              const username = member.getAttribute('data-username').toLowerCase();
+              const type = member.getAttribute('data-type').toLowerCase();
+              const gmail = member.getAttribute('data-gmail').toLowerCase();
+              const mobile = member.getAttribute('data-mobile').toLowerCase();
+              const address = member.getAttribute('data-address').toLowerCase();
+              const branch = member.getAttribute('data-branch').toLowerCase();
+
+              if (name.includes(searchInput) || username.includes(searchInput) || type.includes(searchInput) || gmail.includes(searchInput) || mobile.includes(searchInput) || address.includes(searchInput) || branch.includes(searchInput)) {
+                  member.style.display = ""; // Show member
+              } else {
+                  member.style.display = "none"; // Hide member
+              }
+          });
+      }
+    </script>
+</body>
+</html>

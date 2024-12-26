@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Librarian</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://wallpapercave.com/wp/ijo8KeK.jpg') no-repeat center center fixed;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+            overflow: hidden;
+            animation: backgroundAnimate 15s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes backgroundAnimate {
+            0% {background-position: 0 0;}
+            50% {background-position: 100% 100%;}
+            100% {background-position: 0 0;}
+        }
+
+        nav {
+            width: 100%;
+            background-color: rgba(51, 51, 51, 0.9);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .view-librarians-button {
+            margin-top: 20px;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: #28a745;
+            border: none;
+            padding: 10px;
+            width: 200px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 0 8px #28a745, 0 0 15px #28a745, 0 0 30px #28a745;
+            transition: 0.3s;
+        }
+
+        .view-librarians-button:hover {
+            background-color: #218838;
+            box-shadow: 0 0 10px #218838, 0 0 20px #218838, 0 0 40px #218838;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            margin-top: 20px;
+            color: #fff;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        label {
+            font-size: 14px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 8px #007bff, 0 0 15px #007bff, 0 0 30px #007bff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 0 10px #0056b3, 0 0 20px #0056b3, 0 0 40px #0056b3;
+        }
+
+       
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    color: #fff;
+    display: none;
+    z-index: 1000;
+}
+.notification.success {
+    background-color: #28a745;
+}
+.notification.error {
+    background-color: #dc3545;
+}
+</style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/admin-home"><img src="https://img.icons8.com/ios-filled/50/ffffff/home-page.png" alt="Dashboard Icon" width="30"></a></li>
+            <li><a href="/admin-logout">Logout</a></li>
+            
+        </ul>
+       
+    </nav>
+    <center><a href="/admin-view-librarians"><button class="view-librarians-button">View Librarians</button></a></center>
+<!-- Navigation and Form content remains the same -->
+<form action="/admin-add-librarian" method="POST" enctype="multipart/form-data">
+    
+<!-- Form content -->
+<h2>Add Librarian</h2>
+<!-- Form fields -->
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+<label for="username">UserName:</label>
+<input type="text" id="username" name="username" required>
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required>
+<label for="mobile">Mobile:</label>
+<input type="text" id="mobile" name="mobile" required>
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" required>
+<label for="qualification">Qualification:</label>
+<select id="qualification" name="qualification" required>
+    <option value="">Select Qualification</option>
+    <option value="Bachelor's in Library Science">Bachelor's in Library Science</option>
+    <option value="Master's in Library Science">Master's in Library Science</option>
+    <option value="PhD in Library Science">PhD in Library Science</option>
+</select>
+<label for="profile_photo">Profile Photo:</label>
+<input type="file" id="profile_photo" name="profile_photo" required>
+<button type="submit">Add Librarian</button>
+</form>
+
+<!-- Notification Popup -->
+<div id="notification" class="notification"></div>
+
+<script>
+// Display notification based on URL parameters
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const notification = document.getElementById('notification');
+    
+    if (urlParams.has('success')) {
+        notification.className = 'notification success';
+        notification.innerText = urlParams.get('success');
+        notification.style.display = 'block';
+    } else if (urlParams.has('error')) {
+        notification.className = 'notification error';
+        notification.innerText = urlParams.get('error');
+        notification.style.display = 'block';
+    }
+
+    // Hide notification after 5 seconds
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+});
+</script>
+</body>
+</html>

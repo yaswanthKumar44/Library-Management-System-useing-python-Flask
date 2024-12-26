@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #83a4d4, #b6fbff);
+            color: #333;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            background-color: #354A5F;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            background-color: #354A5F;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f3b13f;
+        }
+
+        nav img {
+            transition: transform 0.3s;
+        }
+
+        nav img:hover {
+            transform: scale(1.1);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
+
+        /* Form */
+        form {
+            width: 100%;
+            max-width: 500px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        form label {
+            margin-top: 15px;
+            display: block;
+            font-weight: bold;
+            color: #555;
+        }
+
+        form input,
+        form select,
+        .save-button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        form input:focus,
+        form select:focus {
+            border-color: #354A5F;
+            outline: none;
+        }
+
+        .save-button {
+            background-color: #354A5F;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .save-button:hover {
+            background-color: #f3b13f;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #e0352c;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        
+        <h1>Edit Book</h1>
+    </header><center>
+    <a href="/admin-view-books" class="back-button">Back to Book Collection</a></center>
+    <!-- Main Content Section -->
+    <main>
+        <form action="/update-book/{{ book.book_id }}" method="POST" enctype="multipart/form-data">
+            <label for="book-name">Book Name:</label>
+            <input type="text" id="book-name" name="book_name" value="{{ book.book_name }}" required>
+
+            <label for="book-type">Book Type:</label>
+            <select id="book-type" name="book_type" required>
+                <option value="Engineering" {% if book.book_type == 'Engineering' %}selected{% endif %}>Engineering</option>
+                <option value="Science" {% if book.book_type == 'Science' %}selected{% endif %}>Science</option>
+                <option value="Literature" {% if book.book_type == 'Literature' %}selected{% endif %}>Literature</option>
+                <option value="Mathematics" {% if book.book_type == 'Mathematics' %}selected{% endif %}>Mathematics</option>
+                <!-- Add other types as needed -->
+            </select>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" value="{{ book.author }}" required>
+
+            <label for="edition">Edition:</label>
+            <input type="text" id="edition" name="edition" value="{{ book.edition }}" required>
+
+            <label for="isbn">ISBN:</label>
+            <input type="text" id="isbn" name="isbn" value="{{ book.isbn }}" required>
+
+            <label for="published-year">Published Year:</label>
+            <input type="number" id="published-year" name="published_year" value="{{ book.published_year }}" required>
+
+            <label for="number-of-books">Number of Books:</label>
+            <input type="number" id="number-of-books" name="number_of_books" value="{{ book.number_of_books }}" required>
+
+            <label for="availability">Availability:</label>
+            <input type="text" id="availability" name="availability" value="{{ book.availability }}" required>
+
+            <label for="cover-image">Cover Image:</label>
+            <input type="file" id="cover-image" name="cover_image">
+
+            <label for="preview-images">Preview Images (Optional):</label>
+            <input type="file" id="preview-image-1" name="preview_image_1">
+            <input type="file" id="preview-image-2" name="preview_image_2">
+            <input type="file" id="preview-image-3" name="preview_image_3">
+
+            <button type="submit" class="save-button">Save Changes</button>
+        </form>
+
+       
+    </main>
+</body>
+</html>

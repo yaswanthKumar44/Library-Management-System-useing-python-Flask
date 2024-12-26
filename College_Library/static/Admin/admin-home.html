@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Library | Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #007bff, #6c757d);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            text-align: center;
+            animation: fadeInDown 1s ease;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            color: #17a2b8;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul img {
+            width: 50px;
+            height: auto;
+            cursor: pointer;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #17a2b8;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            animation: glow 1.5s ease infinite;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            color: #f8f9fa;
+            animation: fadeIn 1s ease;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            color: white;
+            animation: bounceInUp 1s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        .card a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            color: #17a2b8;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 40px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        footer p {
+            margin: 0;
+            color: #f8f9fa;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #17a2b8, 0 0 10px #17a2b8, 0 0 15px #17a2b8, 0 0 20px #17a2b8;
+            }
+            100% {
+                text-shadow: 0 0 20px #17a2b8, 0 0 30px #17a2b8, 0 0 40px #17a2b8, 0 0 50px #17a2b8;
+            }
+        }
+
+        @keyframes bounceInUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>College Library</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/admin-home">
+                        <img src="https://img.icons8.com/ios-filled/50/ffffff/home-page.png" alt="Dashboard Icon">
+                    </a>
+                </li>
+                <li>
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/library.png" alt="College Library Logo" class="logo-img">
+                </li>
+                <li><a href="/admin-logout" id="logout-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome, Admin!</h1>
+        <p>Manage your library with ease using the options below.</p>
+
+        <div class="card-container">
+            <div class="card">
+                <img src="https://img.icons8.com/ios-filled/100/ffffff/library.png" alt="Manage Librarians Icon">
+                <a href="/admin-add-librarian">Manage Librarians</a>
+            </div>
+            
+            <div class="card">
+                <img src="https://img.icons8.com/ios-filled/100/ffffff/books.png" alt="Manage Books Icon">
+                <a href="/admin-add-books">Manage Books</a>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/ios-filled/100/ffffff/user.png" alt="Profile Icon">
+                <a href="/admin-profile">Profile</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 College Library Management System</p>
+    </footer>
+
+    <script>
+        document.getElementById("logout-link").addEventListener("click", function () {
+            window.location.href = "admin-login.html";
+        });
+    </script>
+</body>
+
+</html>

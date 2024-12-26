@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://wallpapercave.com/wp/ijo8KeK.jpg') no-repeat center center fixed;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+            animation: slideIn 0.5s;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.2s;
+        }
+
+        form:hover {
+            transform: scale(1.02);
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .view-books-button {
+            margin-bottom: 20px;
+            background-color: #28a745;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .view-books-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .popup-message {
+            display: none; /* Initially hidden */
+            background-color: #28a745; /* Green background */
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<header>
+    <h1>College Library</h1>
+    <nav>
+        <ul>
+            <li>
+                <a href="/admin-home">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/home-page.png" alt="Dashboard Icon">
+                </a>
+            </li>
+            <li>
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/library.png" alt="College Library Logo" class="logo-img">
+            </li>
+            <li><a href="/admin-logout" id="logout-link">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<body>
+    <a href="/admin-view-books">
+        <button class="view-books-button">View Books</button>
+    </a>
+    
+    <h2>Add New Book</h2>
+    <form id="add-book-form" action="/admin-add-book" method="POST" enctype="multipart/form-data">
+        <label for="book-id">Book ID:</label>
+        <input type="text" id="book-id" name="book_id" required>
+
+        <label for="book-name">Book Name:</label>
+        <input type="text" id="book-name" name="book_name" required>
+
+        <label for="book-type">Book Type:</label>
+        <select id="book-type" name="book_type" required>
+            <option value="Engineering">Engineering</option>
+            <option value="Computer Engineering">Computer Engineering</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Chemical Engineering">Chemical Engineering</option>
+            <option value="Electronics and Communication">Electronics and Communication</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Aerospace Engineering">Aerospace Engineering</option>
+            <option value="Biotechnology">Biotechnology</option>
+            <option value="GATE Preparation">GATE</option>
+            <option value="Science">Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Literature">Literature</option>
+            <option value="Art">Art</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Biology">Biology</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+        </select>
+
+        <label for="number-of-books">Number of Books:</label>
+        <input type="number" id="number-of-books" name="number_of_books" required min="1">
+
+        <label for="availability">Availability:</label>
+        <input type="number" id="availability" name="availability" required min="0">
+
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required>
+
+        <label for="edition">Edition:</label>
+        <input type="text" id="edition" name="edition" required>
+
+        <label for="isbn">ISBN:</label>
+        <input type="text" id="isbn" name="isbn" required>
+
+        <label for="published-year">Published Year:</label>
+        <input type="number" id="published-year" name="published_year" required>
+
+        <label for="cover-image">Cover Image:</label>
+        <input type="file" id="cover-image" name="cover_image" accept="image/*" required>
+
+        <label for="preview-image-1">Preview Image 1:</label>
+        <input type="file" id="preview-image-1" name="preview_image_1" accept="image/*" required>
+
+        <label for="preview-image-2">Preview Image 2:</label>
+        <input type="file" id="preview-image-2" name="preview_image_2" accept="image/*" required>
+
+        <label for="preview-image-3">Preview Image 3:</label>
+        <input type="file" id="preview-image-3" name="preview_image_3" accept="image/*" required>
+
+        <button type="submit">Add Book</button>
+    </form>
+
+    <!-- Popup message div -->
+    <div id="popup-message" class="popup-message"></div>
+
+    <script>
+        // Function to show the popup message
+        function showPopupMessage(message) {
+            const popup = document.getElementById('popup-message');
+            popup.textContent = message; // Set the message text
+            popup.style.display = 'block'; // Make it visible
+            setTimeout(() => {
+                popup.style.display = 'none'; // Hide after 3 seconds
+            }, 3000);
+        }
+
+        document.getElementById('add-book-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+
+            fetch('/admin-add-book', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showPopupMessage('Book added successfully!');
+                    this.reset(); // Reset the form fields
+                } else {
+                    showPopupMessage('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showPopupMessage('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>

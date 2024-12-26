@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Visits</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://wallpapercave.com/wp/WOAttEL.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: rgb(3, 12, 1);
+        }
+
+        header {
+            background-color: #4a69e1;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(26, 219, 9, 0.86);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        header a:hover {
+            background-color: #3a55c3;
+        }
+
+        h2 {
+            color: #07ed4c;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 1s;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            animation: slideIn 1s;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+
+        th {
+            background-color: #08ea13;
+            color: white;
+        }
+
+        tr {
+            color: rgb(233, 235, 224);
+        }
+
+        tr:hover {
+            background-color: #050310;
+            color: rgb(201, 234, 9);
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .search-container input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #4a69e1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #3a55c3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="/librarian-home"><i class="fas fa-house"></i> Dashboard</a>
+            <a href="/librarian-logout" id="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <h2>Library Visit Records</h2>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search..." onkeyup="searchTable()">
+    </div>
+
+    <table id="visits-table">
+        <thead>
+            <tr>
+              
+                <th>Username</th>
+               
+                <th>Visit Date</th>
+                <th>Entry Time</th>
+                <th>Exit Time</th>
+                <th>Time Spent</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if visits %}
+                {% for visit in visits %}
+                    <tr>
+                       
+                        <td>{{ visit.username }}</td>
+                        
+                       
+                        <td>{{ visit.visit_date }}</td>
+                        <td>{{ visit.entry_time if visit.entry_time else 'N/A' }}</td>
+                        <td>{{ visit.exit_time if visit.exit_time else 'N/A' }}</td>
+                        <td>{{ visit.time_spent if visit.time_spent else 'N/A' }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" style="text-align:center;">No visits found for this date.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <footer>
+        <p>&copy; 2024 Library Management System</p>
+    </footer>
+
+    <script>
+        function searchTable() {
+            const input = document.getElementById('search-input');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('visits-table');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let rowContainsText = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cell = cells[j];
+                    if (cell) {
+                        const cellText = cell.textContent || cell.innerText;
+                        if (cellText.toLowerCase().indexOf(filter) > -1) {
+                            rowContainsText = true;
+                            break;
+                        }
+                    }
+                }
+
+                rows[i].style.display = rowContainsText ? '' : 'none';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
